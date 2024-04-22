@@ -604,7 +604,9 @@ impl Player {
         );
 
         if currently_seeking {
-            let mut seek_indicator_shadow = Shadow::big_dark();
+            let mut seek_indicator_shadow = Shadow::NONE;
+            seek_indicator_shadow.spread = 32.0;
+            seek_indicator_shadow.color = Color32::from_black_alpha(96);
             seek_indicator_shadow.color = seek_indicator_shadow
                 .color
                 .linear_multiply(seek_indicator_anim);
@@ -682,7 +684,9 @@ impl Player {
         let mut duration_text_font_id = FontId::default();
         duration_text_font_id.size = 14.;
 
-        let mut shadow = Shadow::big_light();
+        let mut shadow = Shadow::NONE;
+        shadow.spread = 32.0;
+        shadow.color = Color32::from_black_alpha(16);
         shadow.color = shadow.color.linear_multiply(seekbar_anim_frac);
 
         let mut shadow_rect = frame_response.rect;
