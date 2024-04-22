@@ -498,8 +498,6 @@ impl Player {
     /// Draw the video frame and player controls and process state changes.
     pub fn ui(&mut self, ui: &mut Ui, size: Vec2) -> egui::Response {
         let frame_response = self.render_frame(ui, size);
-        self.render_controls(ui, &frame_response);
-        self.render_subtitles(ui, &frame_response);
         self.process_state();
         frame_response
     }
