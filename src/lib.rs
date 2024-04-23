@@ -138,6 +138,7 @@ pub struct Player {
     pub framerate: f64,
     /// Configures certain aspects of this [`Player`].
     pub options: PlayerOptions,
+    pub completed: bool,
     audio_stream_info: (usize, usize),
     subtitle_stream_info: (usize, usize),
     message_sender: PlayerMessageSender,
@@ -421,6 +422,7 @@ impl Player {
                 if self.options.looping {
                     reset_stream = true;
                 } else {
+                    self.completed = true;
                     self.player_state.set(PlayerState::Stopped);
                 }
             }
@@ -428,6 +430,7 @@ impl Player {
                 self.stop_direct();
             }
             PlayerState::Playing => {
+                self.completed = false;
                 for subtitle in self.current_subtitles.iter_mut() {
                     subtitle.remaining_duration_ms -=
                         self.ctx_ref.input(|i| (i.stable_dt * 1000.) as i64);
@@ -1123,6 +1126,7 @@ impl Player {
             current_subtitles: Vec::new(),
             #[cfg(feature = "from_bytes")]
             temp_file: None,
+            completed: false,
         };
 
         loop {
